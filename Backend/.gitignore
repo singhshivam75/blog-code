@@ -1,0 +1,40 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+#package-lock json
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+
+# Build / Cache
+dist/
+build/
+.cache/
+coverage/
+
+# Optional: If you use Docker
+docker-compose.override.yml
+
+# Optional: If you use pm2
+pids
+*.pid
+*.seed
+
+# Optional: If you use test coverage
+.nyc_output
