@@ -138,10 +138,10 @@ const refresh = async (req, res) => {
 
     const newAccessToken = await refreshAccessToken(token);
 
-    // 👇 Set new access token cookie
+    // Set new access token cookie
     res.cookie("token", newAccessToken, {
       httpOnly: true,
-      secure: false, // ⚠️ set true in production with HTTPS
+      secure: false, // set true in production with HTTPS
       sameSite: "strict",
       maxAge: 1000 * 60 * 5, // 5 minutes
     });

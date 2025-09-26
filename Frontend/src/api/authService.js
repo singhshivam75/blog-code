@@ -1,6 +1,5 @@
-// src/api/authService.js
 import API from "./apiClient";
-import { setAccessToken, getAccessToken, clearAccessToken } from "./tokenStorage";
+import { setAccessToken, clearAccessToken } from "./tokenStorage";
 
 // --- Login ---
 export const loginUser = async (credentials) => {
@@ -12,12 +11,13 @@ export const loginUser = async (credentials) => {
   return res.data;
 };
 
-// --- Refresh token (uses HttpOnly cookie on server) ---
+// --- Refresh token ---
 export const refreshToken = async () => {
-  const res = await API.post("/auth/refresh");
-  if (res.data.accessToken) {
-    setAccessToken(res.data.accessToken);
-    return res.data.accessToken;
+  const res = await API.post("/auth/refresh"); // cookie sent automatically
+  const token = res.data.accessToken; // ✅ backend sends { accessToken }
+  if (token) {
+    setAccessToken(token);
+    return token;
   }
   throw new Error("No access token returned");
 };
@@ -32,12 +32,9 @@ export const registerUser = async (userData) => {
   return res.data;
 };
 
-// --- Get access token ---
-export const getToken = () => getAccessToken();
-
 // --- Logout ---
 export const logout = async () => {
-  await API.post("/auth/logout"); // backend clears refresh cookie + DB
+  await API.post("/auth/logout");
   clearAccessToken();
   localStorage.removeItem("user");
 };

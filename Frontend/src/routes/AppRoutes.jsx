@@ -30,7 +30,7 @@ const AppRoutes = () => {
 
       <Route
         path="/create-blog"
-        element={
+        element={ 
           <ProtectedRoute>
             <CreateBlog />
           </ProtectedRoute>

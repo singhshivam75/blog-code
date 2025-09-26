@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { logout as apiLogout } from "../api/authService";
+import { clearAccessToken } from "../api/tokenStorage";
 
 const AuthContext = createContext();
 
@@ -19,10 +21,18 @@ export const AuthProvider = ({ children }) => {
     setToken(tokenValue);
   };
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
-    setUser(null);
+  const logout = async () => {
+    try {
+      await apiLogout();
+    } catch (err) {
+      console.error("Logout error:", err);
+    } finally {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      clearAccessToken();
+      setToken(null);
+      setUser(null);
+    }
   };
 
   return (
